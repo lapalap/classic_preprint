@@ -1,0 +1,241 @@
+% =============================================================
+% Classic Editorial CV Template
+% Inspired by a classic preprint / classicthesis visual language
+% Suitable for academic, research, and research-oriented industry CVs
+% Compile with: pdflatex kirill_cv_template.tex
+% =============================================================
+
+\documentclass[10.5pt,letterpaper]{article}
+
+% ---------- Typography and page geometry ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tgpagella}      % Palatino-like body font
+\usepackage{mathpazo}       % Palatino-like math, useful for technical CVs
+\usepackage{inconsolata}    % Monospace
+\usepackage[letterpaper,top=0.78in,bottom=0.78in,left=0.90in,right=0.90in]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{etoolbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{textcase}
+\usepackage{lastpage}
+
+% ---------- Color system ----------
+\definecolor{CVMaroon}{cmyk}{0,0.87,0.68,0.32}
+\definecolor{CVBlack}{gray}{0.08}
+\definecolor{CVGray}{gray}{0.35}
+\definecolor{CVLightGray}{gray}{0.84}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=CVMaroon,
+  linkcolor=CVMaroon,
+  citecolor=CVMaroon,
+  pdfauthor={Your Name},
+  pdftitle={Your Name - Curriculum Vitae}
+}
+
+% ---------- Global spacing ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.22em}
+\setlist[itemize]{leftmargin=1.25em, itemsep=0.18em, topsep=0.18em, parsep=0pt, partopsep=0pt}
+\setlength{\tabcolsep}{0pt}
+\renewcommand{\arraystretch}{1.08}
+
+% ---------- Header and footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\scriptsize\color{CVGray}\thepage\,/\,\pageref*{LastPage}}
+\setlength{\footskip}{18pt}
+
+% ---------- Section typography ----------
+\DeclareRobustCommand{\spacedallcaps}[1]{\textls[145]{\MakeTextUppercase{#1}}}
+
+\titleformat{\section}
+  {\large\bfseries\color{CVBlack}}
+  {}
+  {0pt}
+  {\spacedallcaps}
+  [\vspace{0.18em}{\color{CVLightGray}\titlerule[0.45pt]}]
+\titlespacing*{\section}{0pt}{0.95em}{0.52em}
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{CVBlack}}
+  {}
+  {0pt}
+  {}
+\titlespacing*{\subsection}{0pt}{0.45em}{0.10em}
+
+% ---------- Identity fields ----------
+\newcommand{\cvName}{Your Name}
+\newcommand{\cvRunningName}{Your Name}
+\newcommand{\cvRole}{Research Scientist \textbar{} Machine Learning \textbar{} Explainable AI}
+\newcommand{\cvLocation}{City, Country}
+\newcommand{\cvEmail}{your.name@email.com}
+\newcommand{\cvWebsite}{yourwebsite.com}
+\newcommand{\cvScholar}{scholar.google.com/citations?user=XXXX}
+\newcommand{\cvGitHub}{github.com/yourhandle}
+\newcommand{\cvLinkedIn}{linkedin.com/in/yourhandle}
+
+% ---------- Reusable components ----------
+\newcommand{\cvlink}[2]{\href{#1}{#2}}
+\newcommand{\sep}{\hspace{0.55em}\textcolor{CVLightGray}{\textbar}\hspace{0.55em}}
+\newcommand{\muted}[1]{\textcolor{CVGray}{#1}}
+\newcommand{\daterange}[1]{\textcolor{CVGray}{#1}}
+\newcommand{\cvbullet}[1]{\item #1}
+
+\newcommand{\cvcontactline}{%
+  \cvLocation
+  \sep \href{mailto:\cvEmail}{\cvEmail}
+  \sep \cvlink{https://\cvWebsite}{\cvWebsite}
+  \sep \cvlink{https://\cvScholar}{Google Scholar}
+  \sep \cvlink{https://\cvGitHub}{GitHub}
+  \sep \cvlink{https://\cvLinkedIn}{LinkedIn}%
+}
+
+\newcommand{\cvnameblock}{%
+  \begingroup
+  \setlength{\parskip}{0pt}%
+  {\LARGE\bfseries\color{CVBlack}\cvName}\par
+  \vspace{0.14em}
+  {\normalsize\color{CVGray}\cvRole}\par
+  \vspace{0.18em}
+  \small\cvcontactline\normalsize
+  \par
+  \endgroup
+}
+
+\newcommand{\cvheading}[4]{%
+  \begin{tabularx}{\textwidth}{@{}X >{\raggedleft\arraybackslash}p{0.25\textwidth}@{}}
+    \textbf{#1} \hspace{0.25em} \muted{#2} & \daterange{#3} \\
+    \multicolumn{2}{@{}l@{}}{\muted{#4}} \\
+  \end{tabularx}
+  \vspace{-0.22em}
+}
+
+\newcommand{\cvrole}[4]{%
+  \begin{tabularx}{\textwidth}{@{}X >{\raggedleft\arraybackslash}p{0.25\textwidth}@{}}
+    \textbf{#1} \hspace{0.25em} \muted{#2} & \daterange{#3} \\
+    \multicolumn{2}{@{}l@{}}{\muted{#4}} \\
+  \end{tabularx}
+  \vspace{-0.20em}
+}
+
+\newcommand{\publication}[4]{%
+  \hangindent=1.35em\hangafter=1
+  #1. \textbf{#2}. \emph{#3}. #4\par
+}
+
+\newcommand{\selectedpublication}[5]{%
+  \hangindent=1.35em\hangafter=1
+  #1. \textbf{#2}. \emph{#3}. #4 \ifstrempty{#5}{}{\sep #5}\par
+}
+
+\newcommand{\skillrow}[2]{%
+  \begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}X@{}}
+    \textbf{#1} & #2 \\
+  \end{tabularx}
+}
+
+\newcommand{\awardrow}[3]{%
+  \begin{tabularx}{\textwidth}{@{}X >{\raggedleft\arraybackslash}p{0.20\textwidth}@{}}
+    \textbf{#1} \muted{#2} & \daterange{#3} \\
+  \end{tabularx}
+}
+
+% ---------- Optional compact mode ----------
+% Uncomment these three lines for a denser 1-2 page industry version.
+% \setlength{\parskip}{0.10em}
+% \titlespacing*{\section}{0pt}{0.70em}{0.32em}
+% \setlist[itemize]{leftmargin=1.20em, itemsep=0.08em, topsep=0.08em}
+
+\begin{document}
+
+% ---------- Name block ----------
+\cvnameblock
+
+% =============================================================
+\section{Profile}
+Research-oriented machine learning scientist with expertise in explainability, representation analysis, and computer vision. Experienced in building rigorous methods, publishing research, and translating technical ideas into usable systems. Replace this paragraph with 3-4 lines tailored to the target role.
+
+% =============================================================
+\section{Core Expertise}
+\skillrow{Research}{Interpretability, representation analysis, computer vision, generative models, model evaluation}
+\skillrow{Methods}{Deep learning, optimization, sparse modeling, activation maximization, statistical analysis}
+\skillrow{Engineering}{Python, PyTorch, JAX or TensorFlow, experiment pipelines, reproducibility, Git, Linux}
+\skillrow{Communication}{Scientific writing, grant proposals, stakeholder presentations, teaching, mentoring}
+
+% =============================================================
+\section{Appointments and Experience}
+\cvrole{Postdoctoral Researcher}{Institution or Company}{2025--Present}{City, Country}
+\begin{itemize}
+  \cvbullet{Lead research on a concise, outcome-oriented theme relevant to the target CV version.}
+  \cvbullet{Develop methods, datasets, or systems that advance the research agenda and support publications or product impact.}
+  \cvbullet{Collaborate across disciplines and mentor junior researchers or interns.}
+\end{itemize}
+
+\cvrole{Doctoral Researcher}{University / Lab}{2021--2025}{City, Country}
+\begin{itemize}
+  \cvbullet{Designed novel methods for analyzing neural representations and diagnosing spurious correlations in vision models.}
+  \cvbullet{Published peer-reviewed work and presented findings to both specialist and broader technical audiences.}
+  \cvbullet{Built reproducible experimental infrastructure for large-scale model analysis.}
+\end{itemize}
+
+% =============================================================
+\section{Education}
+\cvheading{Ph.D. in Computer Science / AI}{University Name}{2021--2025}{Dissertation: \emph{Title of dissertation}; Advisors: Name, Name}
+\cvheading{M.Sc. in Relevant Field}{University Name}{2018--2020}{Thesis: \emph{Title of thesis}}
+\cvheading{B.Sc. in Relevant Field}{University Name}{2014--2018}{Optional: honors, GPA only when helpful}
+
+% =============================================================
+\section{Selected Publications}
+\selectedpublication{[1]}{Your Name, Coauthor A, Coauthor B}{Paper title relevant to the target role}{Venue, Year}{\cvlink{https://example.com}{paper} \sep \cvlink{https://example.com}{code}}
+\selectedpublication{[2]}{Your Name, Coauthor A}{Another strong paper title}{Venue, Year}{\cvlink{https://example.com}{paper}}
+\selectedpublication{[3]}{Coauthor A, Your Name, Coauthor B}{A concise and high-signal publication entry}{Venue, Year}{}
+
+\vspace{0.15em}
+\muted{For an academic CV, expand this into a full publication list or add separate sections for preprints, journal papers, and conference papers.}
+
+% =============================================================
+\section{Research Projects or Industrial Impact}
+\cvrole{Project or Product Title}{Lab, company, or collaboration}{Year--Year}{One-line context}
+\begin{itemize}
+  \cvbullet{State the technical challenge, your contribution, and the measurable outcome.}
+  \cvbullet{Use metrics where possible: speedup, accuracy, scale, adoption, publication, or downstream use.}
+\end{itemize}
+
+\cvrole{Second Project}{Lab, company, or collaboration}{Year--Year}{One-line context}
+\begin{itemize}
+  \cvbullet{Describe what made the project difficult and why your solution mattered.}
+\end{itemize}
+
+% =============================================================
+\section{Teaching, Mentoring, and Supervision}
+\awardrow{Teaching Assistant or Lecturer}{Course Title, Institution}{Year}
+\awardrow{Student Mentoring}{Supervised B.Sc./M.Sc. theses, research interns, or assistants}{Year--Year}
+
+% =============================================================
+\section{Awards, Grants, and Distinctions}
+\awardrow{Award or Fellowship}{Short descriptor, awarding body}{Year}
+\awardrow{Travel Grant or Best Paper Mention}{Optional for academic CVs}{Year}
+
+% =============================================================
+\section{Service and Leadership}
+\begin{itemize}
+  \cvbullet{Reviewer for relevant journals or conferences.}
+  \cvbullet{Workshop organization, lab coordination, open-source leadership, or community service.}
+\end{itemize}
+
+% =============================================================
+\section{References}
+Available upon request. For an academic CV, this section can instead list 2-3 referees with role, institution, and email, depending on norms in your field.
+
+\end{document}
