@@ -1,0 +1,217 @@
+\documentclass{article} % For LaTeX2e
+
+% Classic Preprint template v1.01; 13.04.2026
+
+% Based on the COLM format, with several design and usability changes.
+% Main template and comments updated by Kirill B.
+% This template now supports a single public mode: preprint.
+% Use the package option [preprint] to show authors.
+\usepackage[preprint]{classic_preprint}
+
+% Optional custom header message shown in the running header.
+% Uncomment and edit the next line to override the default preprint header.
+% Example:
+% \paperheadmessage{Preprint. Version 3, April 2026}
+% If this command is omitted, the style file uses its built-in default text.
+%%\paperheadmessage{Preprint. Version 3, April 2026}
+
+% Accent color used for links and decorative elements.
+\usepackage{xcolor}
+\definecolor{Maroon}{cmyk}{0, 0.87, 0.68, 0.32}
+
+% Better micro-typography and colored hyperlinks.
+\usepackage{microtype}
+\usepackage[colorlinks=true, urlcolor=Maroon, linkcolor=Maroon, citecolor=Maroon]{hyperref}
+\usepackage{url}
+
+% Table styling and decorative dropped capital support.
+\usepackage{booktabs}
+\usepackage{lettrine}
+
+% Decorative initial letter font used in the sample text below.
+\input GoudyIn.fd
+\newcommand*\initfamily{\usefont{U}{GoudyIn}{xl}{n}}
+
+% NOTE ABOUT PAGE GEOMETRY
+% The style file already defines the page dimensions.
+% Avoid loading geometry in the usual way, because it can silently override
+% the margins and text block dimensions chosen by the template.
+% If geometry is absolutely required for some advanced purpose, use:
+% \usepackage[pass]{geometry}
+%
+% Current page design from the style file:
+% - Paper size: US Letter (8.5in x 11in)
+% - Text width: 460pt, which is about 6.36in
+% - Text height: 9.0in
+% - Left and right margins: about 1.07in each
+% - Top margin to the text block: about 1.1in, depending slightly on header spacing
+% - Bottom margin: about 0.85in
+%
+% This produces a page that feels fairly full and substantial, rather than thin,
+% while still keeping a classic single-column academic look.
+
+% Optional line-number package.
+% This template does not enable line numbers in preprint mode.
+% If you personally want them for drafting, uncomment \linenumbers after
+% \begin{document}. They are intentionally off by default here.
+%\usepackage{lineno}
+
+\hypersetup{colorlinks=true, urlcolor=Maroon, linkcolor=Maroon, citecolor=Maroon}
+
+% Paper title.
+% Use a manual line break only if the title is genuinely too long for one line.
+\title{Paper Title\\
+A subtitle or second line can go here}
+
+% Author block.
+% Replace the dummy names, affiliations, and repository URL with your own.
+% The style file formats this block automatically in preprint mode.
+\author{%
+Alice Smith\textsuperscript{$1$} \; Bob Johnson\thanks{Equal contribution. Correspondence to \texttt{alice.smith@example.com}.}\,\,\textsuperscript{$,1,2$} \; Carol Lee\footnotemark[1]\,\,\textsuperscript{$,1$} \; David Brown\footnotemark[1]\,\,\textsuperscript{$,1$} \\\bfseries
+Emma Wilson\textsuperscript{$1,2$} \; Frank Miller\textsuperscript{$1$} \; Grace Taylor\textsuperscript{$1$} \; Henry Davis\textsuperscript{$3$} \\\bfseries
+Ivy Moore\textsuperscript{$1$} \; Jack Anderson\textsuperscript{$4$} \; Karen Thomas\textsuperscript{$1$} \\
+\textsuperscript{$1$}University A \; \textsuperscript{$2$}Institute B \; \textsuperscript{$3$}University C \; \textsuperscript{$4$}Research Lab D
+\\[2ex]
+\url{https://github.com/example/project}
+}
+
+% The \author macro works with any number of authors.
+% There are two useful separators for multi-author layouts:
+% - \And lets LaTeX decide where to break the line.
+% - \AND forces a line break at that position.
+
+% Small margin markers sometimes used while drafting.
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+% Simple keyword formatting helper.
+\newcommand{\kwsep}{\;\textbullet\;}
+\newcommand{\keywords}[1]{%
+  \par\noindent\textbf{Keywords: }#1
+}
+
+\begin{document}
+
+% Uncomment the next line only if you want line numbers for your own draft.
+%\linenumbers
+
+% Builds the title, header text, and author block.
+\maketitle
+
+\begin{abstract}
+This template is called \emph{Classic Preprint}. It is based on the COLM design, but has been simplified into a single preprint-oriented format with cleaner comments and a customizable header message by yours truly, Kirill Bykov. The current layout uses US Letter
+paper, a text width of 460pt, and a text height of 9.0in, which gives a full
+but still visually balanced single-column page. The side margins are a little
+over one inch, which keeps the paper from looking thin, while the overall page
+still retains a classic academic appearance.
+\end{abstract}
+
+% Optional keyword line below the abstract.
+\keywords{paper template\kwsep preprint\kwsep LaTeX\kwsep typography}
+
+\section{About this template}
+
+\lettrine[lines=4]{\initfamily\textcolor{Maroon}{T}}{his} file is a sample
+main document for the \emph{Classic Preprint} template. It is intended as a
+starting point for your own paper. The style is based on the COLM format, but
+this version removes the older mode structure and keeps only a preprint
+workflow. In practice, that means the package is loaded with
+\verb|\usepackage[preprint]{classic_preprint}| and there is no longer any need
+to think about separate submission or final options in this template.
+
+\subsection{Custom header message}
+
+The style file provides a command for changing the short message shown in the
+running header:
+
+\begin{center}
+\verb|\paperheadmessage{Preprint. Version 3, April 2026}|
+\end{center}
+
+Use this command in the preamble, after loading the style package and before
+\verb|\begin{document}|. If you do not provide it, the template falls back to
+the built-in default header text from the style file. This is useful for labels
+such as a version note, technical report note, revision date, or a submission
+status line that you want to control directly from the main \texttt{.tex} file.
+
+\subsection{Current page dimensions}
+
+The present design uses US Letter paper, which is \mbox{8.5in \(\times\) 11in}.
+The style file sets the text block to 460pt in width, which is about 6.36in,
+and 9.0in in height. That leaves side margins of about 1.07in on each side.
+Visually, this gives the paper a fairly full page without making the text block
+feel excessively wide. The vertical layout is also compact, which helps the
+page look substantial and not sparse.
+
+For a classic single-column academic layout, this is a reasonable balance:
+there is enough white space to frame the text, but not so much that the page
+looks thin or under-filled. If you want a slightly more relaxed look later, the
+first things to experiment with would be a slightly narrower text width and a
+slightly shorter text height.
+
+\section{How to use the template}
+
+Replace the title, abstract, authors, affiliations, keywords, and body text
+with your own material. The decorative drop cap at the beginning of a section
+is optional. The table and figure examples below are included only to show how
+the page elements look with the current styling.
+
+\subsection{Citations}
+
+This template loads \texttt{natbib} through the style file, so you can use
+commands such as \verb|\citet{key}| and \verb|\citep{key}| in the usual way.
+Keep the bibliography style consistent across the whole document.
+
+\subsection{Footnotes}
+
+Footnotes appear at the bottom of the page and are styled by the template.
+Here is a small example footnote\footnote{This is an example footnote placed in
+the sample document.} to demonstrate the appearance.
+
+\subsection{Figures}
+
+Figures should be clear and readable, with captions placed below the figure.
+The example below is only a placeholder.
+
+\begin{figure}[t]
+\begin{center}
+\fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+\end{center}
+\caption{Sample figure caption.}
+\end{figure}
+
+\subsection{Tables}
+
+Tables should be neat and easy to read. The example below uses
+\texttt{booktabs}, which is usually a good default choice.
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\multicolumn{1}{c}{\bf PART}  &\multicolumn{1}{c}{\bf DESCRIPTION} \\
+\midrule
+Dendrite         & Input terminal \\
+Axon             & Output terminal \\
+Soma             & Cell body (contains cell nucleus) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Sample table title}\label{sample-table}
+\end{table}
+
+\section{Practical notes}
+
+Try not to load packages that silently change page geometry, spacing, or font
+choices unless you really need them. This template is meant to provide a stable
+baseline with a classic look. Most users will only need to edit the title,
+author block, header message, abstract, keywords, and paper body.
+
+\section{Summary}
+
+The goal of this sample file is to document the template itself while also
+serving as a clean starting point for a new paper. The design keeps the page
+visually pleasing, avoids an overly thin text block, and exposes a simple
+customization point through \verb|\paperheadmessage{...}|.
+
+\end{document}
