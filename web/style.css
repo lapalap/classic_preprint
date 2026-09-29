@@ -1,4 +1,4 @@
-:root { --maroon: #8b1e3f; --ink: #201c1b; --muted: #746d69; --paper: #fbfaf7; --line: #d9d1c9; --serif: "IM Fell English", "Palatino Linotype", Palatino, Georgia, serif; --sans: "Libre Franklin", Arial, sans-serif; --mono: "Source Code Pro", monospace; }
+:root { --maroon: #8b1e3f; --ink: #201c1b; --muted: #746d69; --paper: #fbfaf7; --line: #d9d1c9; --serif: "TeX Gyre Pagella", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; --sans: "Libre Franklin", Arial, sans-serif; --mono: "Source Code Pro", monospace; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; color: var(--ink); background: #eeeae5; font-family: var(--serif); line-height: 1.65; }
