@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A classic preprint-style paper landing page." />
+    <title>Paper Title — Classic Preprint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Libre+Franklin:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-rule"></div>
+      <div class="header-inner">
+        <a class="wordmark" href="#top">Classic Preprint</a>
+        <span>Preprint. Version 1, April 2026</span>
+      </div>
+    </header>
+
+    <main id="top" class="paper-shell">
+      <section class="hero" aria-labelledby="paper-title">
+        <p class="eyebrow">Research paper · 2026</p>
+        <h1 id="paper-title">Paper Title<br /><em>A subtitle or second line can go here</em></h1>
+        <p class="authors"><a href="#authors">Alice Smith</a><sup>1</sup> · Bob Johnson<sup>1,2</sup> · Carol Lee<sup>1</sup></p>
+        <p class="affiliations"><sup>1</sup> University A &nbsp; <sup>2</sup> Institute B</p>
+        <nav class="actions" aria-label="Paper links">
+          <a class="button button-primary" href="#abstract">Read the paper</a>
+          <a class="button" href="#bib">Cite</a>
+          <a class="text-link" href="#bib">[PDF]</a>
+        </nav>
+      </section>
+
+      <section id="abstract" class="abstract-block">
+        <h2>Abstract</h2>
+        <p>This landing page translates the Classic Preprint template into a quiet, editorial web experience. It keeps the original single-column rhythm, Palatino-inspired serif voice, maroon accents, compact metadata, and numbered citation language while adding the practical affordances of a paper website.</p>
+      </section>
+
+      <div class="content-grid">
+        <article>
+          <section id="overview" class="paper-section">
+            <p class="dropcap">T</p><p>his is a concise introduction to the work. The page is intentionally restrained: generous margins frame a readable column, section labels create a clear hierarchy, and links use the same maroon accent as the LaTeX template. The visual system is designed to let the paper remain the subject.</p>
+          </section>
+          <section class="paper-section">
+            <h2>Overview</h2>
+            <p>Use this space for the contribution summary, an overview figure, or a short explanation of the research problem. A paper site should make the central idea legible before asking visitors to download anything.</p>
+            <div class="figure-placeholder"><span>Figure 1</span><strong>Replace with the paper’s main visual</strong></div>
+            <p class="caption"><b>Figure 1.</b> A simple, high-contrast figure treatment that follows the paper’s typographic restraint.</p>
+          </section>
+          <section class="paper-section">
+            <h2>Contributions</h2>
+            <ol class="contributions">
+              <li>A clear statement of the first contribution.</li>
+              <li>A compact description of the method or system.</li>
+              <li>An empirical result or finding worth remembering.</li>
+            </ol>
+          </section>
+        </article>
+
+        <aside class="sidebar" aria-label="Paper details">
+          <div class="side-card">
+            <h3>Contents</h3>
+            <a href="#abstract">Abstract</a>
+            <a href="#overview">Overview</a>
+            <a href="#bib">Bibliography</a>
+          </div>
+          <div class="side-card" id="authors">
+            <h3>Authors</h3>
+            <p>Alice Smith<br />Bob Johnson<br />Carol Lee</p>
+            <a href="mailto:alice.smith@example.com">Correspondence ↗</a>
+          </div>
+          <div class="side-card">
+            <h3>Resources</h3>
+            <a href="#">Code repository ↗</a>
+            <a href="#">Supplementary material ↗</a>
+          </div>
+        </aside>
+      </div>
+
+      <section id="bib" class="bibliography">
+        <h2>Bibliography</h2>
+        <ol>
+          <li id="vaswani2017attention">Vaswani, A., Shazeer, N., Parmar, N., et al. “Attention Is All You Need.” <em>Advances in Neural Information Processing Systems</em>, 2017.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer><span>Classic Preprint</span><span>Designed for a focused reading experience</span></footer>
+  </body>
+</html>

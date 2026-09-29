@@ -1,0 +1,43 @@
+:root { --maroon: #8b1e3f; --ink: #201c1b; --muted: #746d69; --paper: #fbfaf7; --line: #d9d1c9; --serif: "IM Fell English", "Palatino Linotype", Palatino, Georgia, serif; --sans: "Libre Franklin", Arial, sans-serif; --mono: "Source Code Pro", monospace; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; color: var(--ink); background: #eeeae5; font-family: var(--serif); line-height: 1.65; }
+.site-header { background: var(--paper); padding: 2.2rem 1.5rem 0; }
+.header-rule { height: 2px; background: var(--maroon); max-width: 960px; margin: 0 auto .75rem; }
+.header-inner { max-width: 960px; margin: auto; display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font: 500 .68rem var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+.wordmark { color: var(--maroon); text-decoration: none; font-weight: 700; }
+.paper-shell { max-width: 960px; margin: 0 auto; padding: 4.5rem clamp(1.5rem, 5vw, 5rem) 6rem; background: var(--paper); min-height: 100vh; }
+.hero { border-bottom: 1px solid var(--line); padding-bottom: 3.5rem; }
+.eyebrow { color: var(--maroon); font: 600 .72rem var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+h1 { max-width: 760px; margin: .8rem 0 1.2rem; font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: 1.02; font-weight: 400; letter-spacing: -.025em; }
+h1 em { color: var(--muted); font-size: .62em; }
+.authors { margin: 0; font-size: 1.14rem; }
+.authors a, a { color: var(--maroon); }
+.affiliations { color: var(--muted); font: .8rem var(--sans); }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+.button { border: 1px solid var(--maroon); color: var(--maroon); text-decoration: none; padding: .55rem 1rem; font: 600 .75rem var(--sans); letter-spacing: .04em; }
+.button-primary { background: var(--maroon); color: white; }
+.text-link { font: 500 .75rem var(--mono); text-decoration: none; }
+.abstract-block { border-left: 3px solid var(--maroon); margin: 3.5rem 0; padding: .2rem 0 .2rem 1.5rem; max-width: 740px; }
+h2 { margin: 0 0 1rem; font-size: 1.55rem; font-weight: 400; }
+h2::after { content: ""; display: block; width: 2.5rem; border-bottom: 2px solid var(--maroon); margin-top: .45rem; }
+.content-grid { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 4rem; }
+.paper-section { margin-bottom: 3rem; }
+.paper-section p { margin-top: 0; }
+.dropcap { float: left; color: var(--maroon); font-size: 4.5rem; line-height: .8; margin: .35rem .45rem 0 0; }
+.sidebar { border-top: 2px solid var(--maroon); align-self: start; font: .76rem/1.5 var(--sans); }
+.side-card { border-bottom: 1px solid var(--line); padding: 1rem 0 1.2rem; }
+.side-card h3 { margin: 0 0 .6rem; font: 700 .68rem var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+.side-card a { display: block; text-decoration: none; margin: .35rem 0; }
+.side-card p { color: var(--muted); margin: 0 0 .6rem; }
+.figure-placeholder { min-height: 210px; display: grid; place-content: center; text-align: center; border: 1px solid var(--line); background: linear-gradient(135deg, transparent 49.5%, #e6ded7 50%, transparent 50.5%), linear-gradient(45deg, transparent 49.5%, #e6ded7 50%, transparent 50.5%); color: var(--maroon); }
+.figure-placeholder span { font: .65rem var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.figure-placeholder strong { font-weight: 400; font-size: 1.3rem; }
+.caption { color: var(--muted); font-size: .82rem; }
+.contributions { padding-left: 1.4rem; }
+.contributions li { padding: .35rem 0 .35rem .4rem; }
+.bibliography { border-top: 2px solid var(--maroon); margin-top: 4rem; padding-top: 1.5rem; }
+.bibliography ol { padding-left: 1.5rem; }
+.bibliography li { padding-left: .4rem; margin: .6rem 0; }
+footer { max-width: 960px; margin: auto; padding: 1.5rem; display: flex; justify-content: space-between; color: var(--muted); font: .65rem var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+@media (max-width: 700px) { .header-inner, footer { display: block; } .header-inner span, footer span { display: block; margin-top: .5rem; } .paper-shell { padding-top: 3rem; } .content-grid { display: block; } .sidebar { margin-top: 3rem; } h1 { font-size: 2.8rem; } }
