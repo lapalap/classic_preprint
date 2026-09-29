@@ -160,7 +160,8 @@ the page elements look with the current styling.
 
 This template loads \texttt{natbib} through the style file, so you can use
 commands such as \verb|\citet{key}| and \verb|\citep{key}| in the usual way.
-Keep the bibliography style consistent across the whole document.
+Keep the bibliography style consistent across the whole document. For example,
+the Transformer architecture is described in \citep{vaswani2017attention}.
 
 \subsection{Footnotes}
 
@@ -213,5 +214,11 @@ The goal of this sample file is to document the template itself while also
 serving as a clean starting point for a new paper. The design keeps the page
 visually pleasing, avoids an overly thin text block, and exposes a simple
 customization point through \verb|\paperheadmessage{...}|.
+
+% Numeric citations and the plainnat bibliography style match the compact,
+% numbered reference presentation commonly used in NeurIPS papers.
+\renewcommand{\refname}{Bibliography}
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \end{document}
