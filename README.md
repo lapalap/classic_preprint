@@ -93,6 +93,16 @@ The paper template draws strong inspiration from the COLM paper design, then mod
 └── README.md
 ```
 
+## Paper webpage
+
+The `web/` directory contains a responsive web edition of the sample preprint. It uses the paper's content, bundles the reference PDF, and serves TeX Gyre Pagella locally. From the repository root, run:
+
+```bash
+python3 -m http.server 8000 --directory web
+```
+
+Then visit `http://localhost:8000`.
+
 ## Notes
 
 - The preprint style file controls the visual layout. Avoid loading packages that unexpectedly override geometry or page formatting unless you know why.

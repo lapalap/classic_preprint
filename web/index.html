@@ -1,91 +1,110 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="A classic preprint-style paper landing page." />
-    <title>Paper Title — Classic Preprint</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="header-rule"></div>
-      <div class="header-inner">
-        <a class="wordmark" href="#top">Classic Preprint</a>
-        <span>Preprint. Version 1, April 2026</span>
-      </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Classic Preprint: a web edition of the sample paper template.">
+  <title>Paper Title · Classic Preprint</title>
+  <link rel="preload" href="./fonts/texgyrepagella-regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="./fonts/texgyrepagella-bold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page" id="top">
+    <header class="running-head">
+      <span>Preprint. Under review.</span>
+      <a href="./classic-preprint.pdf" download>Download PDF <span aria-hidden="true">↗</span></a>
     </header>
 
-    <main id="top" class="paper-shell">
-      <section class="hero" aria-labelledby="paper-title">
-        <p class="eyebrow">Research paper · 2026</p>
-        <h1 id="paper-title">Paper Title<br /><em>A subtitle or second line can go here</em></h1>
-        <p class="authors"><a href="#authors">Alice Smith</a><sup>1</sup> · Bob Johnson<sup>1,2</sup> · Carol Lee<sup>1</sup></p>
-        <p class="affiliations"><sup>1</sup> University A &nbsp; <sup>2</sup> Institute B</p>
-        <nav class="actions" aria-label="Paper links">
-          <a class="button button-primary" href="#abstract">Read the paper</a>
-          <a class="button" href="#bib">Cite</a>
-          <a class="text-link" href="#bib">[PDF]</a>
-        </nav>
-      </section>
+    <main>
+      <article aria-labelledby="paper-title">
+        <header class="paper-head">
+          <h1 id="paper-title">Paper Title<br>A subtitle or second line can go here</h1>
+          <p class="authors">
+            <span>Alice Smith<sup>1</sup></span> <span>Bob Johnson<sup>*, 1, 2</sup></span> <span>Carol Lee<sup>*, 1</sup></span> <span>David Brown<sup>*, 1</sup></span><br class="author-break">
+            <span>Emma Wilson<sup>1, 2</sup></span> <span>Frank Miller<sup>1</sup></span> <span>Grace Taylor<sup>1</sup></span> <span>Henry Davis<sup>3</sup></span><br class="author-break">
+            <span>Ivy Moore<sup>1</sup></span> <span>Jack Anderson<sup>4</sup></span> <span>Karen Thomas<sup>1</sup></span>
+          </p>
+          <p class="affiliations"><sup>1</sup>University A <sup>2</sup>Institute B <sup>3</sup>University C <sup>4</sup>Research Lab D</p>
+          <p class="sample-url">https://github.com/example/project</p>
+        </header>
 
-      <section id="abstract" class="abstract-block">
-        <h2>Abstract</h2>
-        <p>This landing page translates the Classic Preprint template into a quiet, editorial web experience. It keeps the original single-column rhythm, Palatino-inspired serif voice, maroon accents, compact metadata, and numbered citation language while adding the practical affordances of a paper website.</p>
-      </section>
+        <section class="abstract" id="abstract" aria-labelledby="abstract-title">
+          <h2 id="abstract-title">Abstract</h2>
+          <p>This template is called <em>Classic Preprint</em>. It is based on the COLM design, but has been simplified into a single preprint-oriented format with cleaner comments and a customizable header message by yours truly, Kirill Bykov. The current layout uses US Letter paper, a text width of 460pt, and a text height of 9.0in, which gives a full but still visually balanced single-column page. The side margins are a little over one inch, which keeps the paper from looking thin, while the overall page still retains a classic academic appearance.</p>
+        </section>
 
-      <div class="content-grid">
-        <article>
-          <section id="overview" class="paper-section">
-            <p class="dropcap">T</p><p>his is a concise introduction to the work. The page is intentionally restrained: generous margins frame a readable column, section labels create a clear hierarchy, and links use the same maroon accent as the LaTeX template. The visual system is designed to let the paper remain the subject.</p>
-          </section>
-          <section class="paper-section">
-            <h2>Overview</h2>
-            <p>Use this space for the contribution summary, an overview figure, or a short explanation of the research problem. A paper site should make the central idea legible before asking visitors to download anything.</p>
-            <div class="figure-placeholder"><span>Figure 1</span><strong>Replace with the paper’s main visual</strong></div>
-            <p class="caption"><b>Figure 1.</b> A simple, high-contrast figure treatment that follows the paper’s typographic restraint.</p>
-          </section>
-          <section class="paper-section">
-            <h2>Contributions</h2>
-            <ol class="contributions">
-              <li>A clear statement of the first contribution.</li>
-              <li>A compact description of the method or system.</li>
-              <li>An empirical result or finding worth remembering.</li>
-            </ol>
-          </section>
-        </article>
+        <p class="keywords"><strong>Keywords:</strong> paper template <span aria-hidden="true">•</span> preprint <span aria-hidden="true">•</span> LaTeX <span aria-hidden="true">•</span> typography</p>
 
-        <aside class="sidebar" aria-label="Paper details">
-          <div class="side-card">
-            <h3>Contents</h3>
-            <a href="#abstract">Abstract</a>
-            <a href="#overview">Overview</a>
-            <a href="#bib">Bibliography</a>
+        <section id="about" aria-labelledby="about-title">
+          <h2 class="section-title" id="about-title"><span class="section-number">1</span>About this template</h2>
+          <p class="with-initial"><span class="initial" aria-hidden="true">T</span><span class="visually-hidden">T</span>his file is a sample main document for the <em>Classic Preprint</em> template. It is intended as a starting point for your own paper. The style is based on the COLM format, but this version removes the older mode structure and keeps only a preprint workflow. In practice, that means the package is loaded with <code>\usepackage[preprint]{classic_preprint}</code> and there is no longer any need to think about separate submission or final options in this template.</p>
+
+          <h3 id="header-message"><span class="section-number">1.1</span>Custom header message</h3>
+          <p>The style file provides a command for changing the short message shown in the running header:</p>
+          <pre><code>\paperheadmessage{Preprint. Version 3, April 2026}</code></pre>
+          <p>Use this command in the preamble, after loading the style package and before <code>\begin{document}</code>. If you do not provide it, the template falls back to the built-in default header text from the style file. This is useful for labels such as a version note, technical report note, revision date, or a submission status line that you want to control directly from the main <code>.tex</code> file.</p>
+
+          <h3 id="dimensions"><span class="section-number">1.2</span>Current page dimensions</h3>
+          <p>The present design uses US Letter paper, which is 8.5in × 11in. The style file sets the text block to 460pt in width, which is about 6.36in, and 9.0in in height. That leaves side margins of about 1.07in on each side. Visually, this gives the paper a fairly full page without making the text block feel excessively wide. The vertical layout is also compact, which helps the paper look substantial and not sparse.</p>
+          <p>For a classic single-column academic layout, this is a reasonable balance: there is enough white space to frame the text, but not so much that the page looks thin or under-filled. If you want a slightly more relaxed look later, the first things to experiment with would be a slightly narrower text width and a slightly shorter text height.</p>
+        </section>
+
+        <section id="how-to-use" aria-labelledby="how-to-use-title">
+          <h2 class="section-title" id="how-to-use-title"><span class="section-number">2</span>How to use the template</h2>
+          <p>Replace the title, abstract, authors, affiliations, keywords, and body text with your own material. The decorative drop cap at the beginning of a section is optional. The table and figure examples below are included only to show how the page elements look with the current styling.</p>
+
+          <h3 id="citations"><span class="section-number">2.1</span>Citations</h3>
+          <p>This template loads <code>natbib</code> through the style file, so you can use commands such as <code>\citet{key}</code> and <code>\citep{key}</code> in the usual way. Keep the bibliography style consistent across the whole document. For example, the Transformer architecture is described in <a class="citation" href="#ref-1" aria-label="Reference 1">[1]</a>.</p>
+
+          <h3 id="footnotes"><span class="section-number">2.2</span>Footnotes</h3>
+          <p>Footnotes appear at the bottom of the page and are styled by the template. Here is a small example footnote<sup><a class="footnote-ref" href="#note-1" id="note-1-ref">1</a></sup> to demonstrate the appearance.</p>
+
+          <h3 id="figures"><span class="section-number">2.3</span>Figures</h3>
+          <p>Figures should be clear and readable, with captions placed below the figure. The example below is only a placeholder.</p>
+          <figure class="sample-figure">
+            <div class="figure-box" role="img" aria-label="Empty sample figure placeholder"></div>
+            <figcaption>Figure 1: Sample figure caption.</figcaption>
+          </figure>
+
+          <h3 id="tables"><span class="section-number">2.4</span>Tables</h3>
+          <p>Tables should be neat and easy to read. The example below uses <code>booktabs</code>, which is usually a good default choice.</p>
+          <div class="table-wrap">
+            <table>
+              <caption>Table 1: Sample table title</caption>
+              <thead><tr><th scope="col">Part</th><th scope="col">Description</th></tr></thead>
+              <tbody>
+                <tr><td>Dendrite</td><td>Input terminal</td></tr>
+                <tr><td>Axon</td><td>Output terminal</td></tr>
+                <tr><td>Soma</td><td>Cell body (contains cell nucleus)</td></tr>
+              </tbody>
+            </table>
           </div>
-          <div class="side-card" id="authors">
-            <h3>Authors</h3>
-            <p>Alice Smith<br />Bob Johnson<br />Carol Lee</p>
-            <a href="mailto:alice.smith@example.com">Correspondence ↗</a>
-          </div>
-          <div class="side-card">
-            <h3>Resources</h3>
-            <a href="#">Code repository ↗</a>
-            <a href="#">Supplementary material ↗</a>
-          </div>
+        </section>
+
+        <section id="practical-notes" aria-labelledby="practical-notes-title">
+          <h2 class="section-title" id="practical-notes-title"><span class="section-number">3</span>Practical notes</h2>
+          <p>Try not to load packages that silently change page geometry, spacing, or font choices unless you really need them. This template is meant to provide a stable baseline with a classic look. Most users will only need to edit the title, author block, header message, abstract, keywords, and paper body.</p>
+        </section>
+
+        <section id="summary" aria-labelledby="summary-title">
+          <h2 class="section-title" id="summary-title"><span class="section-number">4</span>Summary</h2>
+          <p>The goal of this sample file is to document the template itself while also serving as a clean starting point for a new paper. The design keeps the page visually pleasing, avoids an overly thin text block, and exposes a simple customization point through <code>\paperheadmessage{...}</code>.</p>
+        </section>
+
+        <section class="bibliography" id="bibliography" aria-labelledby="bibliography-title">
+          <h2 id="bibliography-title">Bibliography</h2>
+          <ol><li id="ref-1">Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. In <em>Advances in Neural Information Processing Systems</em>, volume 30, 2017.</li></ol>
+        </section>
+
+        <aside class="footnotes" aria-label="Footnotes">
+          <p id="note-1"><sup>1</sup> This is an example footnote placed in the sample document. <a href="#note-1-ref" aria-label="Back to footnote reference">↩</a></p>
+          <p><sup>*</sup> Equal contribution. Correspondence to alice.smith@example.com.</p>
         </aside>
-      </div>
-
-      <section id="bib" class="bibliography">
-        <h2>Bibliography</h2>
-        <ol>
-          <li id="vaswani2017attention">Vaswani, A., Shazeer, N., Parmar, N., et al. “Attention Is All You Need.” <em>Advances in Neural Information Processing Systems</em>, 2017.</li>
-        </ol>
-      </section>
+      </article>
     </main>
 
-    <footer><span>Classic Preprint</span><span>Designed for a focused reading experience</span></footer>
-  </body>
+    <footer class="page-footer"><span>Classic Preprint · Sample paper</span><a href="#top">Back to top ↑</a></footer>
+  </div>
+</body>
 </html>
