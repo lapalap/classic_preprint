@@ -66,7 +66,7 @@ h3 .section-number { min-width: 1.4rem; }
 p { margin: 0 0 .8rem; }
 article > section:not(.abstract) { margin-top: 1.5rem; }
 .with-initial { min-height: 4.25rem; }
-.initial { float: left; width: 4rem; height: 4rem; margin: .18rem .42rem .1rem 0; border: 1px solid var(--accent); outline: 1px solid var(--accent); outline-offset: -5px; color: var(--accent); font-size: 3.8rem; font-weight: 700; line-height: 3.7rem; text-align: center; }
+.initial { float: left; display: block; width: 4.65rem; height: 4.65rem; margin: .08rem .42rem .1rem 0; }
 .citation, .footnote-ref { font-size: .92em; }
 
 .sample-figure { margin: 2rem auto 1.9rem; text-align: center; }
@@ -100,7 +100,7 @@ table caption { caption-side: bottom; padding-top: 1rem; }
   .affiliations, .sample-url { padding-left: 0; }
   .abstract { margin-top: 2.2rem; }
   .abstract p { text-align: left; }
-  .initial { width: 3.5rem; height: 3.5rem; font-size: 3.3rem; line-height: 3.2rem; }
+  .initial { width: 4.15rem; height: 4.15rem; }
   pre { text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

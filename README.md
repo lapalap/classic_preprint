@@ -95,7 +95,7 @@ The paper template draws strong inspiration from the COLM paper design, then mod
 
 ## Paper webpage
 
-The `web/` directory contains a responsive web edition of the sample preprint. It uses the paper's content, bundles the reference PDF, and serves TeX Gyre Pagella locally. From the repository root, run:
+The `web/` directory contains a responsive web edition of the sample preprint. It uses the paper's content, bundles the reference PDF, and serves TeX Gyre Pagella locally. Its opening initial uses the GoudyInitialen glyph from the PDF; see `web/GOUDY-INITIAL-NOTICE.md` for attribution. From the repository root, run:
 
 ```bash
 python3 -m http.server 8000 --directory web
