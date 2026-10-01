@@ -95,7 +95,11 @@ The paper template draws strong inspiration from the COLM paper design, then mod
 
 ## Paper webpage
 
-The `web/` directory contains a responsive web edition of the sample preprint. It uses the paper's content, bundles the reference PDF, and serves TeX Gyre Pagella locally. Its opening initial uses the GoudyInitialen glyph from the PDF; see `web/GOUDY-INITIAL-NOTICE.md` for attribution. From the repository root, run:
+The `web/` directory contains a responsive project page based on the sample preprint. The page is generated in the browser from `web/paper.md`: edit its JSON metadata (between the `---` lines) for the title, authors, resource links, and citation, then edit the Markdown below for the paper text and section structure. The bundled PDF is a visual reference and download; TeX Gyre Pagella is served locally. The opening initial uses the GoudyInitialen glyph from the PDF; see `web/GOUDY-INITIAL-NOTICE.md` for attribution.
+
+The page offers PDF, code, and BibTeX actions. BibTeX is generated from the Markdown metadata and can be copied or downloaded. Set `arxiv` to the paper's arXiv ID (for example, `2412.12345`) or full arXiv URL to activate its quick link. The sample leaves it blank, so the page shows “link pending” instead of inventing an arXiv paper. Replace the sample title, authors, and `citation_key`, and set `sample` to `false` before publishing a real paper.
+
+From the repository root, run:
 
 ```bash
 python3 -m http.server 8000 --directory web
