@@ -15,14 +15,6 @@
 <body>
   <div class="page" id="top">
     <header class="site-header">
-      <div class="project-nav">
-        <a class="brand" href="#top" id="project-name">Classic Preprint</a>
-        <nav aria-label="Page sections">
-          <a href="#abstract">Overview</a>
-          <a href="#paper-content">The paper</a>
-          <a href="#citation">Cite</a>
-        </nav>
-      </div>
       <div class="running-head"><span id="paper-status">Preprint. Under review.</span><span>Project page</span></div>
     </header>
 
@@ -35,12 +27,22 @@
       </header>
 
       <nav class="resource-links" aria-label="Paper resources">
-        <a id="pdf-link" href="./classic-preprint.pdf">PDF <span aria-hidden="true">↗</span></a>
-        <a id="arxiv-link" hidden>arXiv <span aria-hidden="true">↗</span></a>
-        <span id="arxiv-pending" class="unavailable" title="Add an arXiv ID or URL in paper.md">arXiv <small>link pending</small></span>
-        <a id="repository-link" href="https://github.com/lapalap/classic_preprint">Code <span aria-hidden="true">↗</span></a>
-        <a href="#citation">BibTeX <span aria-hidden="true">↓</span></a>
+        <a id="pdf-link" href="./classic-preprint.pdf">Paper (PDF)</a>
+        <a id="arxiv-link" hidden>arXiv</a>
+        <span id="arxiv-pending" class="unavailable" title="The arXiv link is not yet available">arXiv <small>(pending)</small></span>
+        <a id="repository-link" href="https://github.com/lapalap/classic_preprint">Code</a>
+        <a href="#citation">BibTeX</a>
       </nav>
+
+      <aside class="contents" id="contents" hidden>
+        <details id="contents-disclosure">
+          <summary>Contents</summary>
+          <nav class="contents-nav" aria-label="Paper sections">
+            <a class="contents-title" id="contents-title" href="#paper"></a>
+            <ol class="contents-list" id="contents-list"></ol>
+          </nav>
+        </details>
+      </aside>
 
       <article id="paper-content" aria-label="Paper text"><p>Loading the paper text…</p></article>
 
@@ -56,7 +58,7 @@
       </section>
     </main>
 
-    <footer class="page-footer"><span id="footer-project">Classic Preprint</span><a href="#top">Back to top ↑</a></footer>
+    <footer class="page-footer"><span id="footer-project">Classic Preprint</span><a href="#top">Back to top</a></footer>
   </div>
   <noscript><p class="noscript">Enable JavaScript to render <code>paper.md</code>, or read that file directly.</p></noscript>
 </body>
