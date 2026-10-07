@@ -109,6 +109,8 @@ python3 -m http.server 8000 --directory web
 
 Then visit `http://localhost:8000`.
 
+For a production preview, run `node scripts/build-web.mjs` (Node.js 22 or newer), then serve `_site` instead of `web`. The Pages workflow runs this build automatically. It gives the Markdown, JavaScript, and CSS content-based filenames, preventing browsers from combining assets from different deployments. Only `main` can deploy; development on `webpage` stays separate from the live site.
+
 ## Notes
 
 - The preprint style file controls the visual layout. Avoid loading packages that unexpectedly override geometry or page formatting unless you know why.
