@@ -24,7 +24,7 @@ function decorateHeading(heading) {
   const number = document.createElement("span");
   number.className = "section-number";
   number.textContent = match[1];
-  heading.append(number, document.createTextNode(" " + match[2]));
+  heading.append(number, document.createTextNode(match[2]));
   return match[2];
 }
 
@@ -58,7 +58,6 @@ function renderBody(markdown, keywords) {
     if (node.nodeName === "H2") {
       const isNumbered = /^\d+\s/.test(node.textContent.trim());
       const title = decorateHeading(node);
-      node.dataset.outlineTitle = title;
       currentSection = document.createElement("section");
       currentSection.id = slug(title);
       node.id = `${currentSection.id}-title`;
@@ -92,65 +91,6 @@ function renderBody(markdown, keywords) {
   for (const caption of article.querySelectorAll("p")) {
     if (/^Table \d+:/.test(caption.textContent.trim())) caption.classList.add("table-caption");
   }
-}
-
-function renderContents(meta) {
-  const contents = document.getElementById("contents");
-  const disclosure = document.getElementById("contents-disclosure");
-  const titleLink = document.getElementById("contents-title");
-  const list = document.getElementById("contents-list");
-  const sections = [...article.querySelectorAll(":scope > section"), document.getElementById("citation")];
-  const targets = [document.getElementById("paper"), ...sections];
-  const links = [titleLink];
-  const desktop = window.matchMedia("(min-width: 1280px)");
-
-  titleLink.textContent = meta.title;
-  list.replaceChildren();
-  for (const section of sections) {
-    const heading = section.querySelector("h2");
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = `#${section.id}`;
-    link.textContent = heading.dataset.outlineTitle || heading.textContent;
-    item.append(link);
-    list.append(item);
-    links.push(link);
-  }
-  contents.hidden = false;
-
-  const syncDisclosure = () => { disclosure.open = desktop.matches; };
-  syncDisclosure();
-  desktop.addEventListener("change", syncDisclosure);
-  contents.addEventListener("click", (event) => {
-    if (event.target.closest("a") && !desktop.matches) disclosure.open = false;
-  });
-
-  const updateCurrent = () => {
-    let current = 0;
-    targets.forEach((target, index) => {
-      if (target.getBoundingClientRect().top <= window.innerHeight * .3) current = index;
-    });
-    links.forEach((link, index) => {
-      if (index === current) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
-    });
-  };
-  const updateWeights = () => {
-    sections.forEach((section, index) => {
-      list.children[index].style.setProperty("--section-weight", Math.max(1, section.offsetHeight / 100));
-    });
-    updateCurrent();
-  };
-  const observer = new IntersectionObserver(updateCurrent, {
-    rootMargin: "-20px 0px -70% 0px",
-    threshold: [0, 1],
-  });
-  targets.forEach((target) => observer.observe(target.querySelector("h1, h2")));
-  const resizeObserver = new ResizeObserver(updateWeights);
-  resizeObserver.observe(article);
-  window.addEventListener("resize", updateWeights);
-  document.fonts.ready.then(updateWeights);
-  updateWeights();
 }
 
 function arxivUrl(value) {
@@ -231,6 +171,7 @@ function renderCitation(meta, paperUrl) {
 function renderPage(meta, markdown) {
   const projectName = meta.project_name || "Project";
   document.title = `${meta.title} · ${projectName}`;
+  document.getElementById("project-name").textContent = projectName;
   document.getElementById("footer-project").textContent = projectName;
   document.getElementById("paper-status").textContent = meta.status || "Preprint";
   const title = document.getElementById("paper-title");
@@ -254,7 +195,6 @@ function renderPage(meta, markdown) {
     document.getElementById("arxiv-pending").hidden = true;
   }
   renderCitation(meta, paperUrl);
-  renderContents(meta);
 }
 
 fetch("./paper.md")

@@ -97,9 +97,7 @@ The paper template draws strong inspiration from the COLM paper design, then mod
 
 The `web/` directory contains a responsive project page based on the sample preprint. The page is generated in the browser from `web/paper.md`: edit its JSON metadata (between the `---` lines) for the title, authors, resource links, and citation, then edit the Markdown below for the paper text and section structure. The bundled PDF is a visual reference and download; TeX Gyre Pagella is served locally. The opening initial uses the GoudyInitialen glyph from the PDF; see `web/GOUDY-INITIAL-NOTICE.md` for attribution.
 
-The page offers PDF, code, and BibTeX actions. BibTeX is generated from the Markdown metadata and can be copied or downloaded. Set `arxiv` to the paper's arXiv ID (for example, `2412.12345`) or full arXiv URL to activate its quick link. The sample leaves it blank, so the page shows “arXiv (pending)” instead of inventing an arXiv paper. Replace the sample title, authors, and `citation_key`, and set `sample` to `false` before publishing a real paper.
-
-The section outline is generated from the Markdown's `##` headings. It stays on the left on wide screens, marks the current section as you read, and becomes a collapsible Contents menu on smaller screens.
+The page offers PDF, code, and BibTeX actions. BibTeX is generated from the Markdown metadata and can be copied or downloaded. Set `arxiv` to the paper's arXiv ID (for example, `2412.12345`) or full arXiv URL to activate its quick link. The sample leaves it blank, so the page shows “link pending” instead of inventing an arXiv paper. Replace the sample title, authors, and `citation_key`, and set `sample` to `false` before publishing a real paper.
 
 From the repository root, run:
 
