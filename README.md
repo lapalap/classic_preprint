@@ -99,7 +99,7 @@ The `web/` directory contains a responsive project page based on the sample prep
 
 The page offers PDF, code, and BibTeX actions. BibTeX is generated from the Markdown metadata and can be copied or downloaded. Set `arxiv` to the paper's arXiv ID (for example, `2412.12345`) or full arXiv URL to activate its quick link. The sample leaves it blank, so the page shows “arXiv (pending)” instead of inventing an arXiv paper. Replace the sample title, authors, and `citation_key`, and set `sample` to `false` before publishing a real paper.
 
-The section outline is generated from the Markdown's `##` headings. It stays on the left on wide screens, marks the current section as you read, and becomes a collapsible Contents menu on smaller screens.
+The section outline is generated from the Markdown's `##` headings. It stays on the left on wide screens, marks the current section as you read, and becomes a collapsible Contents menu on smaller screens. Its Pagella labels fade out while reading and reappear on hover or keyboard focus, leaving the reading rail visible. Touch screens keep the labels visible when Contents is open.
 
 From the repository root, run:
 

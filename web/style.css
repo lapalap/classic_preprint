@@ -36,7 +36,7 @@ main{padding:54px 0 88px}
 .resource-links .unavailable small{font-size:.76rem}
 
 /* One outline serves both the desktop reading rail and a compact mobile disclosure. */
-.contents{margin-top:2rem;font: .78rem/1.35 system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+.contents{margin-top:2rem;font: .9rem/1.35 Pagella,Palatino,Georgia,serif}
 .contents summary{width:fit-content;padding:.3rem 0;color:var(--muted);cursor:pointer}
 .contents summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .contents-nav{padding-top:.6rem}
@@ -56,6 +56,11 @@ main{padding:54px 0 88px}
   .contents-list li{flex:var(--section-weight,1) 1 0;min-height:40px}
   .contents-list a{height:100%;border-left:1px solid var(--line);padding:4px 0 4px 12px}
   .contents-list a[aria-current]{border-left:2px solid var(--accent);margin-left:0;padding-left:11px}
+}
+/* Match LessWrong: leave the reading rail visible, reveal its labels on approach. */
+@media(min-width:1280px) and (hover:hover) and (pointer:fine){
+  .contents-label{opacity:0;transition:opacity .25s ease}
+  .contents:hover .contents-label,.contents:focus-within .contents-label{opacity:1}
 }
 #paper-content,article section,.citation-panel{scroll-margin-top:24px}
 #paper-content{padding-top:1.4rem}
@@ -107,5 +112,5 @@ article .footnotes a{margin-left:.2rem}
 .page-footer{display:flex;justify-content:space-between;gap:1rem;padding:1.15rem 0 2.5rem;border-top:1px solid var(--ink);color:var(--muted);font-size:.78rem}
 .noscript{max-width:740px;margin:1rem auto;padding:1rem;color:var(--accent)}
 @media(max-width:620px){:root{font-size:16px}.page{width:min(calc(100% - 36px),var(--width))}.site-header{padding-top:24px}main{padding-top:37px}.paper-head h1{font-size:clamp(2.05rem,8vw,2.7rem)}.authors{margin-top:1.45rem}.resource-links{gap:.6rem 1.25rem}article .abstract p{text-align:left}article .initial{width:4rem;height:4rem}article table{display:block;max-width:100%;overflow-x:auto}.citation-panel{margin-top:4rem;padding:1.25rem .9rem 1rem}.citation-toolbar>div{gap:.65rem}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.contents-label{transition:none}}
 @media print{:root{font-size:11pt}.page{width:100%;max-width:460pt}.contents,.resource-links,.citation-panel,.page-footer{display:none}.site-header{padding-top:0}main{padding-top:28pt}}

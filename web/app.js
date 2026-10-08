@@ -107,14 +107,20 @@ function renderContents(meta) {
   const links = [titleLink];
   const desktop = window.matchMedia("(min-width: 1280px)");
 
-  titleLink.textContent = meta.title;
+  const setLabel = (link, text) => {
+    const label = document.createElement("span");
+    label.className = "contents-label";
+    label.textContent = text;
+    link.replaceChildren(label);
+  };
+  setLabel(titleLink, meta.title);
   list.replaceChildren();
   for (const section of sections) {
     const heading = section.querySelector("h2");
     const item = document.createElement("li");
     const link = document.createElement("a");
     link.href = `#${section.id}`;
-    link.textContent = heading.dataset.outlineTitle || heading.textContent;
+    setLabel(link, heading.dataset.outlineTitle || heading.textContent);
     item.append(link);
     list.append(item);
     links.push(link);
