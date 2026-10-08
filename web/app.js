@@ -3,6 +3,7 @@ const bibtexText = document.getElementById("bibtex-text");
 const copyButton = document.getElementById("copy-bibtex");
 const downloadLink = document.getElementById("download-bibtex");
 const copyStatus = document.getElementById("copy-status");
+const paperSource = "./paper.md";
 
 function parsePaper(source) {
   const frontMatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
@@ -99,19 +100,27 @@ function renderContents(meta) {
   const disclosure = document.getElementById("contents-disclosure");
   const titleLink = document.getElementById("contents-title");
   const list = document.getElementById("contents-list");
+  // Older cached HTML may not contain the optional outline.
+  if (!contents || !disclosure || !titleLink || !list) return;
   const sections = [...article.querySelectorAll(":scope > section"), document.getElementById("citation")];
   const targets = [document.getElementById("paper"), ...sections];
   const links = [titleLink];
   const desktop = window.matchMedia("(min-width: 1280px)");
 
-  titleLink.textContent = meta.title;
+  const setLabel = (link, text) => {
+    const label = document.createElement("span");
+    label.className = "contents-label";
+    label.textContent = text;
+    link.replaceChildren(label);
+  };
+  setLabel(titleLink, meta.title);
   list.replaceChildren();
   for (const section of sections) {
     const heading = section.querySelector("h2");
     const item = document.createElement("li");
     const link = document.createElement("a");
     link.href = `#${section.id}`;
-    link.textContent = heading.dataset.outlineTitle || heading.textContent;
+    setLabel(link, heading.dataset.outlineTitle || heading.textContent);
     item.append(link);
     list.append(item);
     links.push(link);
@@ -141,13 +150,17 @@ function renderContents(meta) {
     });
     updateCurrent();
   };
-  const observer = new IntersectionObserver(updateCurrent, {
-    rootMargin: "-20px 0px -70% 0px",
-    threshold: [0, 1],
-  });
-  targets.forEach((target) => observer.observe(target.querySelector("h1, h2")));
-  const resizeObserver = new ResizeObserver(updateWeights);
-  resizeObserver.observe(article);
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(updateCurrent, {
+      rootMargin: "-20px 0px -70% 0px",
+      threshold: [0, 1],
+    });
+    targets.forEach((target) => observer.observe(target.querySelector("h1, h2")));
+  }
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver(updateWeights);
+    resizeObserver.observe(article);
+  }
   window.addEventListener("resize", updateWeights);
   document.fonts.ready.then(updateWeights);
   updateWeights();
@@ -254,10 +267,15 @@ function renderPage(meta, markdown) {
     document.getElementById("arxiv-pending").hidden = true;
   }
   renderCitation(meta, paperUrl);
-  renderContents(meta);
+  try {
+    renderContents(meta);
+  } catch (error) {
+    // A navigation enhancement must not erase an otherwise loaded paper.
+    console.warn("The section outline could not be initialized.", error);
+  }
 }
 
-fetch("./paper.md")
+fetch(paperSource, { cache: "no-cache" })
   .then((response) => {
     if (!response.ok) throw new Error(`Could not load paper.md (${response.status}).`);
     return response.text();
@@ -268,6 +286,6 @@ fetch("./paper.md")
   })
   .catch((error) => {
     document.getElementById("paper-title").textContent = "Paper unavailable";
-    article.textContent = `${error.message} Serve the web directory over local HTTP to preview this page.`;
+    article.textContent = "The paper could not be loaded. Please reload the page.";
     console.error(error);
   });
