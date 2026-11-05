@@ -1,4 +1,6 @@
 const article = document.getElementById("paper-content");
+const main = article.closest("main");
+const page = main.closest(".page");
 const bibtexText = document.getElementById("bibtex-text");
 const copyButton = document.getElementById("copy-bibtex");
 const downloadLink = document.getElementById("download-bibtex");
@@ -15,7 +17,7 @@ function parsePaper(source) {
 }
 
 function slug(text) {
-  return text.toLowerCase().normalize("NFKD").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
+  return text.toLowerCase().normalize("NFKD").replace(/[^\p{L}\p{N}\s_-]/gu, "").trim().replace(/\s+/g, "-");
 }
 
 function decorateHeading(heading) {
@@ -29,39 +31,40 @@ function decorateHeading(heading) {
   return match[2];
 }
 
-function addOpeningInitial(section) {
-  const paragraph = section?.querySelector("p");
-  const firstText = paragraph?.firstChild;
-  if (!firstText || firstText.nodeType !== Node.TEXT_NODE) return;
-  const match = firstText.textContent.match(/^(\s*)(T)([\s\S]*)$/);
-  if (!match) return;
-  firstText.textContent = match[1] + match[3];
-  const initial = document.createElement("img");
-  initial.className = "initial";
-  initial.src = "./goudy-initial-t.svg";
-  initial.alt = "";
-  initial.setAttribute("aria-hidden", "true");
-  const accessibleLetter = document.createElement("span");
-  accessibleLetter.className = "visually-hidden";
-  accessibleLetter.textContent = "T";
-  paragraph.prepend(initial, accessibleLetter);
-  paragraph.classList.add("with-initial");
-}
-
 function renderBody(markdown, keywords) {
   const parsed = document.createElement("div");
-  parsed.innerHTML = marked.parse(markdown, { gfm: true });
+  parsed.innerHTML = createPaperMarkdown(marked, katex).parse(markdown);
   article.replaceChildren();
+  const usedIds = new Set([...document.querySelectorAll("[id]")].map((node) => node.id));
+  for (const node of parsed.querySelectorAll("[id]")) {
+    if (usedIds.has(node.id)) throw new Error(`Duplicate document ID: ${node.id}`);
+    usedIds.add(node.id);
+  }
+  const headingId = (heading, title, section = false) => {
+    const explicit = title.match(/\s+\{#([A-Za-z][\w-]*)\}\s*$/);
+    if (explicit) {
+      if (usedIds.has(explicit[1])) throw new Error(`Duplicate heading ID: ${explicit[1]}`);
+      heading.lastChild.textContent = heading.lastChild.textContent.replace(explicit[0], "");
+    }
+    const base = explicit?.[1] || slug(heading.textContent.replace(/^\d+(?:\.\d+)*\s+/, "")) || "section";
+    let id = base;
+    let count = 2;
+    while (usedIds.has(id) || (section && usedIds.has(`${id}-title`))) id = `${base}-${count++}`;
+    usedIds.add(id);
+    if (section) usedIds.add(`${id}-title`);
+    return id;
+  };
   let currentSection = null;
   let firstNumberedSection = null;
 
   for (const node of [...parsed.childNodes]) {
     if (node.nodeName === "H2") {
       const isNumbered = /^\d+\s/.test(node.textContent.trim());
+      const id = headingId(node, node.textContent, true);
       const title = decorateHeading(node);
       node.dataset.outlineTitle = title;
       currentSection = document.createElement("section");
-      currentSection.id = slug(title);
+      currentSection.id = id;
       node.id = `${currentSection.id}-title`;
       currentSection.setAttribute("aria-labelledby", node.id);
       if (/^abstract$/i.test(title)) currentSection.classList.add("abstract");
@@ -70,15 +73,16 @@ function renderBody(markdown, keywords) {
       if (isNumbered && !firstNumberedSection) firstNumberedSection = currentSection;
       currentSection.append(node);
       article.append(currentSection);
-    } else if (node.nodeName === "H3") {
-      node.id = slug(decorateHeading(node));
+    } else if (/^H[3-6]$/.test(node.nodeName)) {
+      node.id = headingId(node, node.textContent);
+      decorateHeading(node);
       (currentSection || article).append(node);
     } else {
       (currentSection || article).append(node);
     }
   }
 
-  addOpeningInitial(firstNumberedSection);
+  firstNumberedSection?.querySelector("p")?.classList.add("with-initial");
   const abstract = article.querySelector(".abstract");
   if (abstract && keywords.length) {
     const line = document.createElement("p");
@@ -88,10 +92,21 @@ function renderBody(markdown, keywords) {
     line.append(label, document.createTextNode(keywords.join(" • ")));
     abstract.after(line);
   }
-  const reference = article.querySelector(".bibliography ol li");
-  if (reference) reference.id = "ref-1";
+  [...article.querySelectorAll(".bibliography > ol > li")].forEach((reference, index) => {
+    const id = `ref-${index + 1}`;
+    if (!reference.id && !document.getElementById(id)) reference.id = id;
+  });
   for (const caption of article.querySelectorAll("p")) {
     if (/^Table \d+:/.test(caption.textContent.trim())) caption.classList.add("table-caption");
+  }
+  const notes = article.querySelector(".footnotes");
+  if (notes) {
+    const details = document.createElement("details");
+    details.className = "notes-disclosure";
+    const summary = document.createElement("summary");
+    summary.append(notes.querySelector("h2"));
+    details.append(summary, ...notes.childNodes);
+    notes.append(details);
   }
 }
 
@@ -106,6 +121,11 @@ function renderContents(meta) {
   const targets = [document.getElementById("paper"), ...sections];
   const links = [titleLink];
   const desktop = window.matchMedia("(min-width: 1280px)");
+  const nav = titleLink.closest(".contents-nav");
+  const marker = document.createElement("span");
+  marker.className = "contents-marker";
+  marker.setAttribute("aria-hidden", "true");
+  nav.prepend(marker);
 
   const setLabel = (link, text) => {
     const label = document.createElement("span");
@@ -127,43 +147,60 @@ function renderContents(meta) {
   }
   contents.hidden = false;
 
-  const syncDisclosure = () => { disclosure.open = desktop.matches; };
-  syncDisclosure();
-  desktop.addEventListener("change", syncDisclosure);
-  contents.addEventListener("click", (event) => {
-    if (event.target.closest("a") && !desktop.matches) disclosure.open = false;
-  });
+  let currentIndex = -1;
+  let frame = 0;
 
   const updateCurrent = () => {
+    frame = 0;
+    const scrollTop = Math.max(0, window.scrollY);
+    const viewport = window.innerHeight;
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - viewport);
+    // Let the reading line reach lower headings as the page runs out of scroll.
+    const endOffset = maxScroll > 0 ? Math.max(0, viewport * .7 - (maxScroll - scrollTop)) : 0;
+    const readingLine = viewport * .3 + endOffset;
     let current = 0;
     targets.forEach((target, index) => {
-      if (target.getBoundingClientRect().top <= window.innerHeight * .3) current = index;
+      if (target.getBoundingClientRect().top <= readingLine) current = index;
     });
-    links.forEach((link, index) => {
-      if (index === current) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
-    });
+    if (current !== currentIndex) {
+      links.forEach((link, index) => {
+        if (index === current) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+      currentIndex = current;
+    }
+    if (!desktop.matches) return;
+    // Keep the original full-section highlight, easing both ends to the next row.
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = links[current].getBoundingClientRect();
+    const top = Math.max(0, Math.min(navRect.height, linkRect.top - navRect.top));
+    const bottom = Math.max(top, Math.min(navRect.height, linkRect.bottom - navRect.top));
+    marker.style.clipPath = `inset(${top}px 0 ${navRect.height - bottom}px 0 round 1px)`;
+    if (!marker.classList.contains("is-positioned")) {
+      requestAnimationFrame(() => marker.classList.add("is-positioned"));
+    }
+  };
+  const requestUpdate = () => {
+    if (!frame) frame = requestAnimationFrame(updateCurrent);
   };
   const updateWeights = () => {
     sections.forEach((section, index) => {
       list.children[index].style.setProperty("--section-weight", Math.max(1, section.offsetHeight / 100));
     });
-    updateCurrent();
+    requestUpdate();
   };
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(updateCurrent, {
-      rootMargin: "-20px 0px -70% 0px",
-      threshold: [0, 1],
-    });
-    targets.forEach((target) => observer.observe(target.querySelector("h1, h2")));
-  }
+  disclosure.open = true;
+  updateWeights();
   if ("ResizeObserver" in window) {
     const resizeObserver = new ResizeObserver(updateWeights);
     resizeObserver.observe(article);
+    resizeObserver.observe(sections.at(-1));
+    resizeObserver.observe(nav);
   }
+  window.addEventListener("scroll", requestUpdate, { passive: true });
   window.addEventListener("resize", updateWeights);
+  list.addEventListener("scroll", requestUpdate, { passive: true });
   document.fonts.ready.then(updateWeights);
-  updateWeights();
 }
 
 function arxivUrl(value) {
@@ -209,8 +246,6 @@ function makeBibtex(meta, paperUrl) {
   if (paperUrl) {
     const id = new URL(paperUrl).pathname.replace(/^\/(abs|pdf)\//, "").replace(/\.pdf$/, "");
     lines.push(`  eprint = {${id}},`, "  archivePrefix = {arXiv},", `  url = {https://arxiv.org/abs/${id}},`);
-  } else if (meta.sample) {
-    lines.push("  note = {Template example},");
   }
   lines[lines.length - 1] = lines[lines.length - 1].replace(/,$/, "");
   lines.push("}");
@@ -225,10 +260,6 @@ function renderCitation(meta, paperUrl) {
   downloadLink.href = blobUrl;
   downloadLink.download = `${meta.citation_key}.bib`;
   window.addEventListener("pagehide", () => URL.revokeObjectURL(blobUrl), { once: true });
-  document.getElementById("citation-kind").textContent = meta.sample ? "Example" : "Paper";
-  document.getElementById("citation-note").textContent = meta.sample
-    ? "This citation uses the template’s sample title and authors. Replace them in paper.md before publishing."
-    : "Copy or download the citation for this paper.";
   copyButton.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(bibtex);
@@ -244,8 +275,8 @@ function renderCitation(meta, paperUrl) {
 function renderPage(meta, markdown) {
   const projectName = meta.project_name || "Project";
   document.title = `${meta.title} · ${projectName}`;
-  document.getElementById("footer-project").textContent = projectName;
-  document.getElementById("paper-status").textContent = meta.status || "Preprint";
+  document.querySelector('meta[name="description"]').content = meta.description || `${meta.title} · ${projectName}`;
+  document.querySelector(".eyebrow").textContent = meta.eyebrow || "Paper & project resources";
   const title = document.getElementById("paper-title");
   title.replaceChildren(document.createTextNode(meta.title));
   if (meta.subtitle) {
@@ -273,6 +304,7 @@ function renderPage(meta, markdown) {
     // A navigation enhancement must not erase an otherwise loaded paper.
     console.warn("The section outline could not be initialized.", error);
   }
+  initializeReader(meta);
 }
 
 fetch(paperSource, { cache: "no-cache" })
@@ -280,12 +312,28 @@ fetch(paperSource, { cache: "no-cache" })
     if (!response.ok) throw new Error(`Could not load paper.md (${response.status}).`);
     return response.text();
   })
-  .then((source) => {
+  .then(async (source) => {
     const { meta, markdown } = parsePaper(source);
     renderPage(meta, markdown);
+    const initial = article.querySelector(".with-initial");
+    if (initial) {
+      // Keep the drop cap out of view until its font is ready, with a bounded wait.
+      let timeout;
+      const loaded = await Promise.race([
+        document.fonts.load("1em GoudyInitialen").then((faces) => faces.length > 0, () => false),
+        new Promise((resolve) => { timeout = setTimeout(resolve, 1500, false); }),
+      ]).finally(() => clearTimeout(timeout));
+      initial.classList.toggle("with-initial", loaded);
+    }
+    page.dataset.paper = "ready";
   })
   .catch((error) => {
     document.getElementById("paper-title").textContent = "Paper unavailable";
     article.textContent = "The paper could not be loaded. Please reload the page.";
+    document.querySelectorAll(".resource-links, .citation-panel, .contents").forEach((element) => { element.hidden = true; });
+    page.dataset.paper = "error";
     console.error(error);
+  })
+  .finally(() => {
+    main.removeAttribute("aria-busy");
   });

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="280" viewBox="0 0 480 280" role="img" aria-labelledby="title desc">
+  <title id="title">Attention weights</title>
+  <desc id="desc">An illustrative four by six matrix. Darker maroon cells represent larger attention weights for a query and key pair.</desc>
+  <rect width="480" height="280" fill="#faf8f5"/>
+  <g font-family="Georgia,serif" fill="#65605b">
+    <text x="240" y="32" text-anchor="middle" font-size="16">Attention weights</text>
+    <text x="270" y="65" text-anchor="middle" font-size="13">Keys</text>
+    <text x="49" y="151" text-anchor="middle" font-size="13" transform="rotate(-90 49 151)">Queries</text>
+  </g>
+  <g fill="#a51f2d">
+    <rect x="104" y="82" width="44" height="30" opacity=".8"/><rect x="154" y="82" width="44" height="30" opacity=".3"/><rect x="204" y="82" width="44" height="30" opacity=".12"/><rect x="254" y="82" width="44" height="30" opacity=".2"/><rect x="304" y="82" width="44" height="30" opacity=".1"/><rect x="354" y="82" width="44" height="30" opacity=".15"/>
+    <rect x="104" y="118" width="44" height="30" opacity=".2"/><rect x="154" y="118" width="44" height="30" opacity=".7"/><rect x="204" y="118" width="44" height="30" opacity=".45"/><rect x="254" y="118" width="44" height="30" opacity=".12"/><rect x="304" y="118" width="44" height="30" opacity=".22"/><rect x="354" y="118" width="44" height="30" opacity=".1"/>
+    <rect x="104" y="154" width="44" height="30" opacity=".14"/><rect x="154" y="154" width="44" height="30" opacity=".2"/><rect x="204" y="154" width="44" height="30" opacity=".35"/><rect x="254" y="154" width="44" height="30" opacity=".85"/><rect x="304" y="154" width="44" height="30" opacity=".3"/><rect x="354" y="154" width="44" height="30" opacity=".2"/>
+    <rect x="104" y="190" width="44" height="30" opacity=".1"/><rect x="154" y="190" width="44" height="30" opacity=".25"/><rect x="204" y="190" width="44" height="30" opacity=".15"/><rect x="254" y="190" width="44" height="30" opacity=".3"/><rect x="304" y="190" width="44" height="30" opacity=".55"/><rect x="354" y="190" width="44" height="30" opacity=".9"/>
+  </g>
+  <text x="240" y="253" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#65605b">Darker cells indicate stronger attention · schematic</text>
+</svg>

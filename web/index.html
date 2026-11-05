@@ -4,24 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Classic Preprint paper and project resources.">
+  <meta name="color-scheme" content="light">
   <title>Classic Preprint · Paper</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preload" href="./paper.md" as="fetch" crossorigin>
   <link rel="preload" href="./fonts/texgyrepagella-regular.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="./fonts/texgyrepagella-bold.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="./style.css?v=reading-outline-3">
+  <link rel="preload" href="./fonts/goudy-initialen-web.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css?v=0.19.1">
+  <link rel="stylesheet" href="./style.css?v=drop-cap-font">
   <script src="./vendor/marked.umd.js?v=17.0.5" defer></script>
-  <script src="./app.js?v=reading-outline-3" defer></script>
+  <script src="./vendor/katex/katex.min.js?v=0.19.1" defer></script>
+  <script src="./markdown.js?v=paper-refinements-2" defer></script>
+  <script src="./reader.js?v=paper-loading" defer></script>
+  <script src="./app.js?v=drop-cap-font" defer></script>
+  <noscript><style>.page[data-paper="loading"]{display:none}</style></noscript>
 </head>
 <body>
-  <div class="page" id="top">
-    <header class="site-header">
-      <div class="running-head"><span id="paper-status">Preprint. Under review.</span><span>Project page</span></div>
-    </header>
+  <div class="page" id="top" data-paper="loading">
+    <div class="paper-loading" role="status"><span class="visually-hidden">Loading paper…</span></div>
 
-    <main>
+    <main aria-busy="true">
       <header class="paper-head" id="paper">
         <p class="eyebrow">Paper &amp; project resources</p>
-        <h1 id="paper-title">Loading paper…</h1>
+        <h1 id="paper-title">Classic Preprint</h1>
         <p class="authors" id="authors"></p>
         <p class="affiliations" id="affiliations"></p>
       </header>
@@ -44,22 +50,26 @@
         </details>
       </aside>
 
-      <article id="paper-content" aria-label="Paper text"><p>Loading the paper text…</p></article>
+      <article id="paper-content" aria-label="Paper text"></article>
 
       <section class="citation-panel" id="citation" aria-labelledby="citation-title">
         <div class="citation-heading">
           <h2 id="citation-title">BibTeX citation</h2>
-          <span id="citation-kind">Example</span>
         </div>
-        <p class="citation-note" id="citation-note">This citation uses the template’s sample title and authors.</p>
+        <p class="citation-note">Copy or download the citation for this paper.</p>
         <div class="citation-toolbar"><span>BibTeX</span><div><button type="button" id="copy-bibtex" disabled>Copy</button><a id="download-bibtex" download="citation.bib">Download .bib</a></div></div>
         <pre class="bibtex"><code id="bibtex-text"></code></pre>
         <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
       </section>
     </main>
 
-    <footer class="page-footer"><span id="footer-project">Classic Preprint</span><a href="#top">Back to top</a></footer>
+    <footer class="page-footer"><a href="https://github.com/lapalap/classic_preprint">Classic Preprint on GitHub</a><a href="#top">Back to top</a></footer>
   </div>
-  <noscript><p class="noscript">Enable JavaScript to render <code>paper.md</code>, or read that file directly.</p></noscript>
+  <aside class="margin-preview" id="margin-preview" tabindex="-1" aria-label="Annotation" aria-hidden="true" inert>
+    <h2 id="preview-title"></h2>
+    <div class="preview-body" id="preview-body"></div>
+  </aside>
+  <p class="visually-hidden" id="interaction-status" role="status" aria-live="polite"></p>
+  <noscript><p class="noscript">Enable JavaScript to view the paper, or <a href="./paper.md">read the Markdown source</a>.</p></noscript>
 </body>
 </html>

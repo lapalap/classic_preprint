@@ -1,7 +1,7 @@
 ---
 {
   "project_name": "Classic Preprint",
-  "status": "Preprint. Under review.",
+  "description": "Classic Preprint: a readable paper template with annotated equations, references, and margin notes.",
   "title": "Paper Title",
   "subtitle": "A subtitle or second line can go here",
   "year": "2026",
@@ -28,8 +28,7 @@
   "pdf": "./classic-preprint.pdf",
   "arxiv": "",
   "repository": "https://github.com/lapalap/classic_preprint",
-  "citation_key": "smith2026papertitle",
-  "sample": true
+  "citation_key": "smith2026papertitle"
 }
 ---
 
@@ -94,6 +93,16 @@ Tables should be neat and easy to read. The example below uses `booktabs`, which
 
 Try not to load packages that silently change page geometry, spacing, or font choices unless you really need them. This template is meant to provide a stable baseline with a classic look. Most users will only need to edit the title, author block, header message, abstract, keywords, and paper body.
 
+### 3.1 An equation with context
+
+Scaled dot-product attention compares queries with keys, then uses the resulting weights to combine values. It is a building block of the Transformer architecture described by [Vaswani et al.](#ref-transformer). The denominator acts as [a stabilizing factor](#note-scaling); [masking](#comment-mask) can restrict which positions attend to each other.
+
+:::equation attention Scaled dot-product attention
+\operatorname{Attention}(\var{Q}{Q},\var{K}{K},\var{V}{V}) = \operatorname{softmax}\!\left(\frac{\var{Q}{Q}\var{K}{K}^{\mathsf T}}{\sqrt{\var{dk}{d_k}}}\right)\var{V}{V}
+:::
+
+The same symbol is highlighted wherever it occurs in the equation. Explore a symbol to read its definition without leaving the text.
+
 ## 4 Summary
 
 The goal of this sample file is to document the template itself while also serving as a clean starting point for a new paper. The design keeps the page visually pleasing, avoids an overly thin text block, and exposes a simple customization point through `\paperheadmessage{...}`.
@@ -102,8 +111,42 @@ The goal of this sample file is to document the template itself while also servi
 
 1. Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need. In *Advances in Neural Information Processing Systems*, volume 30, 2017.
 
+:::reference transformer Attention is all you need
+**Ashish Vaswani et al. · NeurIPS 2017**
+
+Introduces the Transformer, an architecture built around attention mechanisms.
+
+[Read the paper on arXiv](https://arxiv.org/abs/1706.03762)
+:::
+
 ## Notes
 
 <p id="note-1"><sup>1</sup> This is an example footnote placed in the sample document. <a href="#note-1-ref" aria-label="Back to footnote reference">↩</a></p>
 
 <p><sup>*</sup> Equal contribution. Correspondence to alice.smith@example.com.</p>
+
+:::note scaling Why divide by the square root of the key dimension?
+If query and key components are independent, zero-mean, and have unit variance, their dot product has variance proportional to $d_k$. Dividing by $\sqrt{d_k}$ keeps the scores at a more stable scale before the softmax.
+
+<img src="./images/attention.svg" width="480" height="280" loading="lazy" alt="An illustrative matrix of attention weights, with darker cells indicating stronger attention.">
+:::
+
+:::comment mask A note on causal masking
+In an autoregressive decoder, a causal mask prevents a token from attending to future positions. Masked scores are set to $-\infty$ before the softmax, so those positions receive zero weight.
+:::
+
+:::variable Q Query matrix
+Each row is a **query vector** for one token: a representation of the information that token is looking for. Its shape is $n_q \times d_k$.
+:::
+
+:::variable K Key matrix
+Each row is a **key vector** for one token. Query–key dot products measure compatibility. Its shape is $n_k \times d_k$.
+:::
+
+:::variable V Value matrix
+The **value vectors** carry the information combined by attention weights. Its shape is $n_k \times d_v$; the attention output has shape $n_q \times d_v$.
+:::
+
+:::variable dk Key dimension
+The number of components in each query and key vector. The factor $1/\sqrt{d_k}$ scales dot products before the softmax.
+:::

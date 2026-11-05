@@ -1,11 +1,12 @@
 import { createHash } from "node:crypto";
-import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const source = join(root, "web");
 const output = join(root, "_site");
+await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 await cp(source, output, {
   recursive: true,
@@ -29,10 +30,15 @@ const app = (await readFile(join(source, "app.js"), "utf8"))
 const assets = new Map([
   ["style.css", await fingerprint("style.css")],
   ["vendor/marked.umd.js", await fingerprint("vendor/marked.umd.js")],
+  ["vendor/katex/katex.min.css", await fingerprint("vendor/katex/katex.min.css")],
+  ["vendor/katex/katex.min.js", await fingerprint("vendor/katex/katex.min.js")],
+  ["markdown.js", await fingerprint("markdown.js")],
+  ["reader.js", await fingerprint("reader.js")],
   ["app.js", await fingerprint("app.js", app)],
 ]);
 let html = await readFile(join(source, "index.html"), "utf8");
-html = html.replace(/\.\/(style\.css|app\.js|vendor\/marked\.umd\.js)(?:\?[^"\s]*)?/g,
+html = html.replace('href="./paper.md" as="fetch"', `href="${paper}" as="fetch"`);
+html = html.replace(/\.\/(style\.css|app\.js|markdown\.js|reader\.js|vendor\/marked\.umd\.js|vendor\/katex\/katex\.min\.(?:css|js))(?:\?[^"\s]*)?/g,
   (_, path) => assets.get(path));
 await writeFile(join(output, "index.html"), html);
 console.log("Built _site with content-versioned paper, scripts, and stylesheet.");
